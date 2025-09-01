@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.bugtracking.ObjectType.TASK;
 import static com.javarush.jira.bugtracking.task.TaskUtil.fillExtraFields;
@@ -39,6 +41,30 @@ public class TaskService {
     private final SprintRepository sprintRepository;
     private final TaskExtMapper extMapper;
     private final UserBelongRepository userBelongRepository;
+
+//tags
+    @Transactional
+    public void attachTag(long taskId, Set<String> tags) {
+        Task task = handler.getRepository().getExisted(taskId);
+
+        Set<String> existingTags = task.getTags();
+        if (existingTags == null) {
+            existingTags = new HashSet<>();
+        }
+        existingTags.addAll(tags);
+        task.setTags(existingTags);
+    }
+
+    @Transactional
+    public void detachTag(long taskId, Set<String> tags) {
+        Task task = handler.getRepository().getExisted(taskId);
+
+        if (task.getTags() != null) {
+            task.getTags().removeAll(tags);
+        }
+    }
+//tags
+
 
     @Transactional
     public void changeStatus(long taskId, String statusCode) {

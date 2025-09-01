@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.common.BaseHandler.createdResponse;
 
@@ -40,6 +41,29 @@ public class TaskController {
     private final Handlers.ActivityHandler activityHandler;
     private final UserBelongRepository userBelongRepository;
 
+    // Tags endpoints ----------------------------------------------------------
+
+
+//      Добавить теги к задаче
+//      POST /api/tasks/tag/{id}
+
+    @PostMapping("/tag/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addTags(@PathVariable("id") long taskId, @RequestBody Set<String> tags) {
+        log.info("add tags to task id={}", taskId);
+        taskService.attachTag(taskId, tags);
+    }
+
+//      Удалить теги из задачи
+//      DELETE /api/tasks/tag/{id}
+
+    @DeleteMapping("/tag/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeTags(@PathVariable("id") long taskId, @RequestBody Set<String> tags) {
+        log.info("remove tags from task id={}", taskId);
+        taskService.detachTag(taskId, tags);
+    }
+// Tags endpoints ----------------------------------------------------------
 
     @GetMapping("/{id}")
     public TaskToFull get(@PathVariable long id) {
