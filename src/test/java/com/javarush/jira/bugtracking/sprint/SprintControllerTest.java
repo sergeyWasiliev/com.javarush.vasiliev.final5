@@ -2,6 +2,7 @@ package com.javarush.jira.bugtracking.sprint;
 
 import com.javarush.jira.AbstractControllerTest;
 import com.javarush.jira.bugtracking.sprint.to.SprintTo;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -274,16 +275,17 @@ class SprintControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity());
     }
 
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void updateDuplicateCode() throws Exception {
-//        SprintTo duplicateCodeTo = new SprintTo(SPRINT1_ID, sprintTo2.getCode(), ACTIVE, PROJECT1_ID);
-//        perform(MockMvcRequestBuilders.put(MNGR_SPRINTS_REST_URL_SLASH + SPRINT1_ID)profile
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(writeValue(duplicateCodeTo)))
-//                .andDo(print())
-//                .andExpect(status().isConflict());
-//    }
+    @Test
+    @Disabled("Тест временно отключен")
+    @WithUserDetails(value = ADMIN_MAIL)
+    void updateDuplicateCode() throws Exception {
+        SprintTo duplicateCodeTo = new SprintTo(SPRINT1_ID, sprintTo2.getCode(), ACTIVE, PROJECT1_ID);
+        perform(MockMvcRequestBuilders.put(MNGR_SPRINTS_REST_URL_SLASH + SPRINT1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(writeValue(duplicateCodeTo)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)

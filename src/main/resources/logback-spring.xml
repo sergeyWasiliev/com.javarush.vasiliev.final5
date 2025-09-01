@@ -27,7 +27,7 @@
             </rollingPolicy>
         </appender>
         <root level="WARN">
-            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 </configuration>
