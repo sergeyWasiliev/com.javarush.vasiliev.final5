@@ -25,7 +25,6 @@ spring:
         jdbc.batch_size: 20
   datasource:
     url: jdbc:postgresql://localhost:5432/jira
-#    url: jdbc:postgresql://jira-db:5432/jira
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
